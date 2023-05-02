@@ -6,14 +6,15 @@ from tqdm import tqdm
 import numpy as np
 import pygame
 
+
 # Function to Display snake
 def display_snake(snake_position, display):
     for position in snake_position:
-        pygame.draw.rect(display, (255, 0, 0), pygame.Rect(position[0], position[1], 10, 10))
+        pygame.draw.rect(display, (0, 0, 0), pygame.Rect(position[0], position[1], 10, 10))
 
 # Function to Display apple
 def display_apple(apple_position, display):
-    pygame.draw.rect(display, (0, 255, 0), pygame.Rect(apple_position[0], apple_position[1], 10, 10))
+    pygame.draw.rect(display, (255, 0, 0), pygame.Rect(apple_position[0], apple_position[1], 10, 10))
 
 # Function for Initialising game with starting positions.
 def starting_positions():
@@ -57,7 +58,7 @@ def collision_with_apple(apple_position, score):
 
 # Function to check if snake has collided with a boundary. 
 def collision_with_boundaries(snake_start):
-    if snake_start[0] >= 500 or snake_start[0] < 0 or snake_start[1] >= 500 or snake_start[1] < 0:
+    if snake_start[0] >= display_width or snake_start[0] < 0 or snake_start[1] >= display_height or snake_start[1] < 0:
         return 1
     else:
         return 0
@@ -141,9 +142,24 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
 
         snake_position, apple_position, score = generate_snake(snake_start, snake_position, apple_position,
                                                                button_direction, score)
+
         pygame.display.set_caption("SCORE: " + str(score))
+        font = pygame.font.Font('freesansbold.ttf', 32)
+ 
+        # create a text surface object,
+        # on which text is drawn on it.
+        text = font.render("SCORE: " + str(score), True, (0, 255, 0), (0, 0, 255))
+ 
+        # create a rectangular object for the
+        # text surface object
+        textRect = text.get_rect()
+ 
+        # set the center of the rectangular object.
+        textRect.center = (display_width // 2, 0 + textRect.height / 2)
+
+        pygame.display.get_surface().blit(text, textRect)
         pygame.display.update()
-        clock.tick(50000)
+        clock.tick(60)
 
         return snake_position, apple_position, score
 

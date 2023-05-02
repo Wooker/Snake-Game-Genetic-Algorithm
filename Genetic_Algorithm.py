@@ -1,18 +1,22 @@
 from Run_Game import *
 from random import choice, randint
 
+
 def cal_pop_fitness(pop, filename):
     # calculating the fitness value by playing a game with the given weights in chromosome
     fitness = []
+    weights = []
     for i in range(pop.shape[0]):
         fit = run_game_with_ML(display, clock, pop[i])
         
         file1 = open(filename, "a+")
         file1.write("fitness value of chromosome " + str(i) + " :  " + str(fit) + "\n")
+        # print("fitness value of chromosome " + str(i) + " :  " + str(fit) + "\n")
         file1.close()
         # print('fitness value of chromosome '+ str(i) +' :  ', fit)
         fitness.append(fit)
-    return np.array(fitness)
+        weights.append(pop[i])
+    return np.array(fitness), weights
 
 def select_mating_pool(pop, fitness, num_parents):
     # Selecting the best individuals in the current generation as parents for producing the offspring of the next generation.

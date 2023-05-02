@@ -9,6 +9,7 @@ W1_shape = (n_h, n_x) # Weights between input and hidden layer I.
 W2_shape = (n_h2, n_h) # Weights between hidden layer I and hidden layer II.
 W3_shape = (n_y, n_h2) # Weights between hidden layer II and output layer.
 
+
 def get_weights_from_encoded(individual):
     W1 = individual[0:W1_shape[0] * W1_shape[1]]
     W2 = individual[W1_shape[0] * W1_shape[1]:W2_shape[0] * W2_shape[1] + W1_shape[0] * W1_shape[1]]
@@ -28,3 +29,4 @@ def forward_propagation(X, individual):
     Z3 = np.matmul(W3, A2)
     A3 = softmax(Z3)
     return A3
+

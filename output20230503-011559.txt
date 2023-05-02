@@ -1,0 +1,2 @@
+##############        GENERATION 0  ############### 
+fitness value of chromosome 0 :  140320

@@ -1,0 +1,14 @@
+##############        GENERATION 0  ############### 
+fitness value of chromosome 0 :  -938
+fitness value of chromosome 1 :  -126
+fitness value of chromosome 2 :  -110
+fitness value of chromosome 3 :  -110
+fitness value of chromosome 4 :  -982
+fitness value of chromosome 5 :  -126
+fitness value of chromosome 6 :  -982
+fitness value of chromosome 7 :  -70
+fitness value of chromosome 8 :  70
+fitness value of chromosome 9 :  8
+fitness value of chromosome 10 :  -66
+fitness value of chromosome 11 :  -128
+fitness value of chromosome 12 :  -110

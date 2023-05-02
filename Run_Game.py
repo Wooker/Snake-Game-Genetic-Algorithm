@@ -16,12 +16,12 @@ def run_game_with_ML(display, clock, weights):
         count_same_direction = 0
         prev_direction = 0
 
-        for _ in range(steps_per_game): #running game for 2500 steps
+        # for _ in range(steps_per_game): #running game for 2500 steps
+        while True:
             # Get current snake direction and blocked directions for snake.
             current_direction_vector, is_front_blocked, is_left_blocked, is_right_blocked = blocked_directions(snake_position)
             angle, snake_direction_vector, apple_direction_vector_normalized, snake_direction_vector_normalized = angle_with_apple(
                 snake_position, apple_position)
-            predictions = []
             # Predict direction(Left,right,forward) based on output from neural network.
             predicted_direction = np.argmax(np.array(forward_propagation(np.array(
                 [is_left_blocked, is_front_blocked, is_right_blocked, apple_direction_vector_normalized[0],
@@ -59,7 +59,8 @@ def run_game_with_ML(display, clock, weights):
                 max_score = score
             # Checking condition for snake movement in loop.
             if count_same_direction > 8 and predicted_direction != 0:
-                score2 -= 1 # Give a negative score to mention that its a wrong move. 
+                score2 -= 1000 # Give a negative score to mention that its a wrong move. 
+                break
             else:
                 score2 += 2 # Else give a positive score
 
