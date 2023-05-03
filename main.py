@@ -14,8 +14,8 @@ from numpy import loadtxt
 # The population will have sol_per_pop chromosome where each chromosome has num_weights genes.
 sol_per_pop = 50
 num_generations = 100
-crossover_percentage = 0.8  # 0.2
-mutation_intensity = 0.25  # 0.01
+crossover_percentage = 0.2  # 0.2
+mutation_intensity = 0.1  # 0.01
 
 datetimeCurr = str(time.strftime("%Y%m%d-%H%M%S"))
 filename = "output"+datetimeCurr+".txt"

@@ -6,7 +6,7 @@ def run_game_with_ML(display, clock, weights):
     avg_score = 0
     test_games = 1
     score1 = 0
-    steps_per_game = 1000
+    steps_per_game = 400
     score2 = 0
 
     for _ in range(test_games):
@@ -16,8 +16,8 @@ def run_game_with_ML(display, clock, weights):
         count_same_direction = 0
         prev_direction = 0
 
-        for _ in range(steps_per_game): #running game for 2500 steps
-        # while True:
+        # for _ in range(steps_per_game): #running game for 2500 steps
+        while True:
             # Get current snake direction and blocked directions for snake.
             current_direction_vector, is_front_blocked, is_left_blocked, is_right_blocked = blocked_directions(snake_position)
             angle, snake_direction_vector, apple_direction_vector_normalized, snake_direction_vector_normalized = angle_with_apple(

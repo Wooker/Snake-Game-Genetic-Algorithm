@@ -168,7 +168,7 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
 
         pygame.display.get_surface().blit(text, textRect)
         pygame.display.update()
-        clock.tick(100000)
+        clock.tick(60)
 
         return snake_position, apple_position, score
 
