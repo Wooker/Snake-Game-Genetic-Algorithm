@@ -6,7 +6,7 @@ def run_game_with_ML(display, clock, weights):
     avg_score = 0
     test_games = 1
     score1 = 0
-    steps_per_game = 400
+    steps_per_game = 1000
     score2 = 0
 
     for _ in range(test_games):

@@ -25,7 +25,14 @@ def display_wall(display):
 def starting_positions():
     snake_start = [100, 100]
     snake_position = [[100, 100], [90, 100], [80, 100]]
-    apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
+    while True:
+        apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
+        count = 0
+        for wall in wall_pos:
+            if apple_position[0] == wall[0] and apple_position[1] == wall[1]:
+                count += 1
+        if count == 0:
+            break
     score = 0
 
     return snake_start, snake_position, apple_position, score
@@ -57,7 +64,14 @@ def generate_snake(snake_start, snake_position, apple_position, button_direction
 
 # Function to check if snake has reached apple. 
 def collision_with_apple(apple_position, score):
-    apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
+    while True:
+        apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
+        count = 0
+        for wall in wall_pos:
+            if apple_position[0] == wall[0] and apple_position[1] == wall[1]:
+                count += 1
+        if count == 0:
+            break
     score += 1
     return apple_position, score
 
@@ -187,11 +201,11 @@ red = (255,0,0)
 black = (0,0,0)
 white = (255,255,255)
 
-wall_left = [(x * 10, display_height // 2) for x in range((display_width // 10 // 2 - 1))]
-wall_right = [(display_width - x * 10, display_height // 2) for x in range((display_width // 10 // 2 - 1))]
-wall_top = [(display_width // 2, y * 10) for y in range((display_height // 10 // 2 - 1))]
-wall_bottom = [(display_width // 2, display_height - y * 10) for y in range((display_height // 10 // 2 - 1))]
-wall_pos = wall_left + wall_right + wall_top + wall_bottom
+wall = [(150 + x * 10, 150) for x in range(20)]
+wall_pos = []
+wall_pos += wall
+for s in range(20):
+    wall_pos += [(w[0], w[1] + s * 10) for w in wall]
 
 pygame.init()
 display=pygame.display.set_mode((display_width,display_height))
