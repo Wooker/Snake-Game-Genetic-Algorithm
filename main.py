@@ -14,8 +14,8 @@ from numpy import loadtxt
 # The population will have sol_per_pop chromosome where each chromosome has num_weights genes.
 sol_per_pop = 50
 num_generations = 100
-crossover_percentage = 0.2
-mutation_intensity = 0.01
+crossover_percentage = 0.8  # 0.2
+mutation_intensity = 0.25  # 0.01
 
 datetimeCurr = str(time.strftime("%Y%m%d-%H%M%S"))
 filename = "output"+datetimeCurr+".txt"
@@ -28,12 +28,11 @@ max_fitness = []
 # Defining the population size.
 pop_size = (sol_per_pop, num_weights)
 #Creating the initial population.
-# if os.path.isfile("weights.txt"):
-# else:
-
-new_population = np.random.choice(np.arange(-1, 1, step = 0.01), size = pop_size, replace=True)
-new_population = loadtxt("weights.txt")
-# new_population[0] = loadtxt("max_weight.txt")
+if os.path.isfile("weights.txt") and os.path.isfile("max_weight.txt"):
+    new_population = loadtxt("weights.txt")
+    new_population[0] = loadtxt("max_weight.txt")
+else:
+    new_population = np.random.choice(np.arange(-1, 1, step = 0.01), size = pop_size, replace=True)
 
 file1 = open(filename, "w")
 file1.close()

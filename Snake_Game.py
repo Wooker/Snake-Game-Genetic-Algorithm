@@ -16,6 +16,11 @@ def display_snake(snake_position, display):
 def display_apple(apple_position, display):
     pygame.draw.rect(display, (255, 0, 0), pygame.Rect(apple_position[0], apple_position[1], 10, 10))
 
+
+def display_wall(display):
+    for wall in wall_pos:
+        pygame.draw.rect(display, (0, 0, 255), pygame.Rect(wall[0], wall[1], 10, 10))
+
 # Function for Initialising game with starting positions.
 def starting_positions():
     snake_start = [100, 100]
@@ -58,6 +63,9 @@ def collision_with_apple(apple_position, score):
 
 # Function to check if snake has collided with a boundary. 
 def collision_with_boundaries(snake_start):
+    for wall in wall_pos:
+        if snake_start[0] == wall[0] and snake_start[1] == wall[1]:
+            return 1
     if snake_start[0] >= display_width or snake_start[0] < 0 or snake_start[1] >= display_height or snake_start[1] < 0:
         return 1
     else:
@@ -139,6 +147,7 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
 
         display_apple(apple_position, display)
         display_snake(snake_position, display)
+        display_wall(display)
 
         snake_position, apple_position, score = generate_snake(snake_start, snake_position, apple_position,
                                                                button_direction, score)
@@ -159,7 +168,7 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
 
         pygame.display.get_surface().blit(text, textRect)
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(100000)
 
         return snake_position, apple_position, score
 
@@ -177,6 +186,12 @@ green = (0,255,0)
 red = (255,0,0)
 black = (0,0,0)
 white = (255,255,255)
+
+wall_left = [(x * 10, display_height // 2) for x in range((display_width // 10 // 2 - 1))]
+wall_right = [(display_width - x * 10, display_height // 2) for x in range((display_width // 10 // 2 - 1))]
+wall_top = [(display_width // 2, y * 10) for y in range((display_height // 10 // 2 - 1))]
+wall_bottom = [(display_width // 2, display_height - y * 10) for y in range((display_height // 10 // 2 - 1))]
+wall_pos = wall_left + wall_right + wall_top + wall_bottom
 
 pygame.init()
 display=pygame.display.set_mode((display_width,display_height))
