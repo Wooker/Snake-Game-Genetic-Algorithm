@@ -10,17 +10,26 @@ import pygame
 # Function to Display snake
 def display_snake(snake_position, display):
     for position in snake_position:
-        pygame.draw.rect(display, (0, 0, 0), pygame.Rect(position[0], position[1], 10, 10))
+        pygame.draw.rect(
+            display, (0, 0, 0), pygame.Rect(position[0], position[1], 10, 10)
+        )
+
 
 # Function to Display apple
 def display_apple(apple_position, display):
-    pygame.draw.rect(display, (255, 0, 0), pygame.Rect(apple_position[0], apple_position[1], 10, 10))
+    pygame.draw.rect(
+        display, (255, 0, 0),
+        pygame.Rect(apple_position[0], apple_position[1], 10, 10)
+    )
+
 
 # Function for Initialising game with starting positions.
 def starting_positions():
     snake_start = [100, 100]
     snake_position = [[100, 100], [90, 100], [80, 100]]
-    apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
+    apple_position = [
+        random.randrange(1, 50) * 10, random.randrange(1, 50) * 10
+    ]
     score = 0
 
     return snake_start, snake_position, apple_position, score
@@ -30,7 +39,13 @@ def apple_distance_from_snake(apple_position, snake_position):
     return np.linalg.norm(np.array(apple_position) - np.array(snake_position[0]))
 
 # Function to Generate snake based on its direction of movement.
-def generate_snake(snake_start, snake_position, apple_position, button_direction, score):
+def generate_snake(snake_start, snake_position, apple_position, button_direction, score, moves, count_loop):
+    if len(moves) != 0 and snake_start == moves[count_loop] and snake_start in moves:
+        count_loop += 1
+    else:
+        moves.append(list(snake_start))
+
+
     if button_direction == 1:
         snake_start[0] += 10
     elif button_direction == 0:
@@ -43,12 +58,16 @@ def generate_snake(snake_start, snake_position, apple_position, button_direction
     if snake_start == apple_position:
         apple_position, score = collision_with_apple(apple_position, score)
         snake_position.insert(0, list(snake_start))
-
+        if len(moves) != 0:
+            moves = []
+            count_loop = -1
+            # print(f"{moves}, {count_loop}");
     else:
         snake_position.insert(0, list(snake_start))
         snake_position.pop()
 
-    return snake_position, apple_position, score
+
+    return snake_position, apple_position, score, moves, count_loop
 
 # Function to check if snake has reached apple. 
 def collision_with_apple(apple_position, score):
@@ -129,7 +148,7 @@ def angle_with_apple(snake_position, apple_position):
     return angle, snake_direction_vector, apple_direction_vector_normalized, snake_direction_vector_normalized
 
 # Function to play the game. 
-def play_game(snake_start, snake_position, apple_position, button_direction, score, display, clock):
+def play_game(snake_start, snake_position, apple_position, button_direction, score, display, clock, moves, count_loop):
     crashed = False
     while crashed is not True:
         for event in pygame.event.get():
@@ -140,8 +159,8 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
         display_apple(apple_position, display)
         display_snake(snake_position, display)
 
-        snake_position, apple_position, score = generate_snake(snake_start, snake_position, apple_position,
-                                                               button_direction, score)
+        snake_position, apple_position, score, moves, count_loop = generate_snake(snake_start, snake_position, apple_position,
+                                                               button_direction, score, moves, count_loop)
 
         pygame.display.set_caption("SCORE: " + str(score))
         font = pygame.font.Font('freesansbold.ttf', 32)
@@ -159,9 +178,9 @@ def play_game(snake_start, snake_position, apple_position, button_direction, sco
 
         pygame.display.get_surface().blit(text, textRect)
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(500)
 
-        return snake_position, apple_position, score
+        return snake_position, apple_position, score, moves, count_loop
 
 
 '''

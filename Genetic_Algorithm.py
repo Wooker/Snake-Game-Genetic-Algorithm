@@ -8,12 +8,7 @@ def cal_pop_fitness(pop, filename):
     weights = []
     for i in range(pop.shape[0]):
         fit = run_game_with_ML(display, clock, pop[i])
-        
-        file1 = open(filename, "a+")
-        file1.write("fitness value of chromosome " + str(i) + " :  " + str(fit) + "\n")
         # print("fitness value of chromosome " + str(i) + " :  " + str(fit) + "\n")
-        file1.close()
-        # print('fitness value of chromosome '+ str(i) +' :  ', fit)
         fitness.append(fit)
         weights.append(pop[i])
     return np.array(fitness), weights
@@ -47,17 +42,6 @@ def crossover(parents, offspring_size):
                 break
     return offspring
 
-
-# flat curve result
-# def mutation(offspring_crossover, mutation_intensity):
-#     # mutating the offsprings generated from crossover to maintain variation in the population
-#     num_genes_mutate = (int)(mutation_intensity*offspring_crossover.shape[1]/100)
-#     for idx in range(offspring_crossover.shape[0]):
-#         for _ in range(num_genes_mutate):
-#             i = randint(0, offspring_crossover.shape[1]-1)
-#             random_value = np.random.choice(np.arange(-1, 1, step = 0.001), size = (1), replace = False)
-#             offspring_crossover[idx, i] = offspring_crossover[idx, i] + random_value
-#     return offspring_crossover
 
 # two results with 0.1 and 0.01
 def mutation(offspring_crossover, mutation_intensity):

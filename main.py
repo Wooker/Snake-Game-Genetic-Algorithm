@@ -21,29 +21,21 @@ datetimeCurr = str(time.strftime("%Y%m%d-%H%M%S"))
 filename = "output"+datetimeCurr+".txt"
 graphname = "graph"+datetimeCurr+".png"
 
-num_parents_mating = (int)(crossover_percentage*sol_per_pop) # has to be even
+num_parents_mating = (int)(crossover_percentage*sol_per_pop)
 num_weights = n_x*n_h + n_h*n_h2 + n_h2*n_y
 max_fitness = []
 
 # Defining the population size.
 pop_size = (sol_per_pop, num_weights)
+
 #Creating the initial population.
-# if os.path.isfile("weights.txt"):
-# else:
-
 new_population = np.random.choice(np.arange(-1, 1, step = 0.01), size = pop_size, replace=True)
-new_population = loadtxt("weights.txt")
-# new_population[0] = loadtxt("max_weight.txt")
-
-file1 = open(filename, "w")
-file1.close()
+if os.path.isfile("weights.txt") and os.path.isfile("max_weight.txt"):
+    new_population = loadtxt("weights.txt")
+    new_population[0] = loadtxt("max_weight.txt")
 
 for generation in range(num_generations):
-    file1 = open(filename, "a+")
-    file1.write("##############        GENERATION " + str(generation)+ "  ############### \n")
     print("GENERATION " + str(generation)+ "  ############### \n")
-    file1.close()
-    # print('##############        GENERATION ' + str(generation)+ '  ###############' )
     
     # Measuring the fitness of each chromosome in the population.
     fitness, weights = cal_pop_fitness(new_population, filename)
@@ -54,11 +46,7 @@ for generation in range(num_generations):
     np.savetxt("weights.txt", weights)
     max_fitness.append(np.max(fitness))
     
-    file1 = open(filename, "a+")
-    file1.write("#######  fittest chromosome in generation " + str(generation) + " is having fitness value:  " + str(np.max(fitness)) + "\n")
     print("#######  fittest chromosome in generation " + str(generation) + " is having fitness value:  " + str(np.max(fitness)) + "\n")
-    file1.close()
-    # print('#######  fittest chromosome in generation ' + str(generation) + ' is having fitness value:  ', np.max(fitness))
     
     # Selecting the best parents in the population for mating.
     parents = select_mating_pool(new_population, fitness, num_parents_mating)
